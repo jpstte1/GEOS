@@ -291,8 +291,14 @@ struct ComputeRotationMatricesKernel
     forAll< POLICY >( size, [=] GEOS_HOST_DEVICE ( localIndex const k )
     {
 
+#if !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdangling-reference"
       localIndex const & f0 = elemsToFaces[k][0];
       localIndex const & f1 = elemsToFaces[k][1];
+#pragma GCC diagnostic pop
+#endif
+
 
       real64 Nbar[3];
       Nbar[0] = faceNormal[f0][0] - faceNormal[f1][0];

@@ -231,7 +231,12 @@ testNumericalDerivatives( constitutive::MultiFluidBase & fluid,
   auto const & phaseEnthCopy     = GET_FLUID_DATA( fluidCopy, fields::multifluid::phaseEnthalpy );
   auto const & phaseEnergyCopy   = GET_FLUID_DATA( fluidCopy, fields::multifluid::phaseInternalEnergy );
   auto const & phaseCompFracCopy = GET_FLUID_DATA( fluidCopy, fields::multifluid::phaseCompFraction );
+#if !defined(__clang__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdangling-reference"
   auto const & totalDensCopy     = GET_FLUID_DATA( fluidCopy, fields::multifluid::totalDensity );
+#pragma GCC diagnostic pop
+#endif
 
 #undef GET_FLUID_DATA
 
